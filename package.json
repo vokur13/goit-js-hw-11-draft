@@ -1,0 +1,30 @@
+{
+  "name": "goit-js-hw-11-draft",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://vokur13.github.io/goit-js-hw-11-draft",
+  "scripts": {
+    "start": "parcel src/*.html",
+    "build": "parcel build src/*.html --public-url /goit-js-hw-11-draft/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vokur13/goit-js-hw-11-draft.git"
+  },
+  "keywords": [],
+  "author": "VOLODYMYR_KUROV",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vokur13/goit-js-hw-11-draft/issues"
+  },
+  "dependencies": {
+    "modern-normalize": "^1.1.0"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.6.0",
+    "parcel": "^2.6.0",
+    "parcel-reporter-clean-dist": "^1.0.4",
+    "posthtml-include": "^1.7.4"
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead"
+}
