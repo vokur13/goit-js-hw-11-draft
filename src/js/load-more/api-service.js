@@ -37,8 +37,11 @@ export default class GalleryAPIService {
             'Sorry, there are no images matching your search query. Please try again.'
           );
         }
-        this.onIncrementPage(hits);
         let totalCount = this.hitsCount;
+        if (totalCount === 0) {
+          this.onFoundNotify(totalHits);
+        }
+        this.onIncrementPage(hits);
         const fetchInfo = { hits, totalCount, totalHits };
         return fetchInfo;
       });
@@ -55,6 +58,10 @@ export default class GalleryAPIService {
   }
   resetPage() {
     this.page = 1;
+  }
+
+  onFoundNotify(totalHits) {
+    Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
   }
 
   get query() {
