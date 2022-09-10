@@ -2,7 +2,7 @@ export default class GalleryAPIService {
   constructor() {
     this.queryItem = '';
     this.page = 1;
-    this.per_page = 7;
+    this.per_page = 8;
   }
   fetchGallery() {
     console.log(this);

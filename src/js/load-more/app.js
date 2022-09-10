@@ -64,15 +64,15 @@ function onSearch(e) {
 
   galleryAPIService.query = e.currentTarget.elements.searchQuery.value;
   galleryAPIService.resetPage();
-  galleryAPIService.fetchGallery().then(hits => {
-    console.log(hits);
-  });
+  galleryAPIService.fetchGallery().then(appendGalleryMarkup);
 }
 
 function onLoadMore() {
-  galleryAPIService.fetchGallery().then(hits => {
-    console.log(hits);
-  });
+  galleryAPIService.fetchGallery().then(appendGalleryMarkup);
+}
+
+function appendGalleryMarkup(hits) {
+  refs.galleryContainer.insertAdjacentHTML('beforeend', cardMarkupTpl(hits));
 }
 
 // function fetchGallery(query) {
