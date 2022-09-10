@@ -7,7 +7,8 @@
   left: 0;
   width: 100%;
   z-index: 10;
-  background-color: #912105;
+  /* background-color: #912105; */
+  background-color: skyblue;
 }
 .header__container {
   max-width: 1200px;
@@ -19,4 +20,9 @@
   min-height: 70px;
 }
 .search-form {
+  display: flex;
+}
+
+.search-form input {
+  margin-right: 5px;
 }

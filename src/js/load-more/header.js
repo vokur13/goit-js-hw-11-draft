@@ -1,3 +1,6 @@
+import '../../css/_common.css';
+import '../../css/_header.css';
+
 // Header positioning
 
 const { height: pageHeaderHeight } = document

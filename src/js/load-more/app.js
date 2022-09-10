@@ -1,43 +1,10 @@
 import cardMarkupTpl from '../../templates/cardMarkupTpl.hbs';
+import '../../css/_common.css';
 import '../../css/_app.css';
 import GalleryAPIService from './api-service';
+import Button from './load-more-btn';
 // import Notiflix from 'notiflix';
 // import axios from 'axios';
-
-// const BASE_URL = 'https://pixabay.com/api/';
-// const API_KEY = '29248542-cea93977a5234fa0e2d1b3dfd';
-// const q = 'yellow+flowers';
-
-// const searchParams = new URLSearchParams({
-//   key: API_KEY,
-//   q: 'cat',
-//   image_type: 'photo',
-//   orientation: 'horizontal',
-//   safesearch: true,
-//   per_page: 7,
-//   page: 1,
-//   fields: [
-//     'webformatURL',
-//     'largeImageURL',
-//     'tags',
-//     'likes',
-//     'views',
-//     'comments',
-//     'downloads',
-//   ],
-// });
-
-// const searchParams = new URLSearchParams({
-//   fields: [
-//     'webformatURL',
-//     'largeImageURL',
-//     'tags',
-//     'likes',
-//     'views',
-//     'comments',
-//     'downloads',
-//   ],
-// });
 
 // const refs = {
 //   form: document.querySelector('#search-form'),
@@ -50,49 +17,47 @@ import GalleryAPIService from './api-service';
 const refs = {
   form: document.querySelector('#search-form'),
   galleryContainer: document.querySelector('.gallery'),
-  loadMoreBtn: document.querySelector('.load-more'),
+  //   loadMoreBtn: document.querySelector('.load-more'),
 };
 
+const loadMoreBtn = new Button({
+  selector: '[data-action="load-more"]',
+  hidden: true,
+});
+const submitBtn = new Button({ selector: '[type="submit"]' });
 const galleryAPIService = new GalleryAPIService();
-console.log(galleryAPIService);
 
 refs.form.addEventListener('submit', onSearch);
-refs.loadMoreBtn.addEventListener('click', onLoadMore);
+loadMoreBtn.refs.button.addEventListener('click', fetchHits);
+
+submitBtn.show();
 
 function onSearch(e) {
   e.preventDefault();
 
   galleryAPIService.query = e.currentTarget.elements.searchQuery.value;
+  if (galleryAPIService.query === '') {
+    return alert('Please let us know the query subject');
+  }
+
   galleryAPIService.resetPage();
-  galleryAPIService.fetchGallery().then(appendGalleryMarkup);
+  resetGalleryContainer();
+  loadMoreBtn.show();
+  fetchHits();
 }
 
-function onLoadMore() {
-  galleryAPIService.fetchGallery().then(appendGalleryMarkup);
+function fetchHits() {
+  loadMoreBtn.disable();
+  galleryAPIService.fetchGallery().then(hits => {
+    appendGalleryMarkup(hits);
+    loadMoreBtn.enable();
+  });
 }
 
 function appendGalleryMarkup(hits) {
   refs.galleryContainer.insertAdjacentHTML('beforeend', cardMarkupTpl(hits));
 }
 
-// function fetchGallery(query) {
-//   const URL = `${BASE_URL}?key=${API_KEY}`;
-//   return fetch(`${URL}&q=${query}&image_type=photo&per_page=8&page=1`).then(
-//     fetchResponse
-//   );
-//     const URL = `${BASE_URL}?${query}`;
-//     console.log('URL', URL);
-//     return fetch(URL).then(fetchResponse);
-// }
-
-//  fetchCountries(country)
-//       .then(renderCountryCard)
-//       .catch(onFetchError)
-//       .finally(() => {});
-
-// function renderGallery(gallery) {
-//   const markupGallery = gallery.map(item => {
-//     return cardMarkupTpl(item);
-//   });
-//   refs.galleryContainer.innerHTML = markupGallery;
-// }
+function resetGalleryContainer() {
+  refs.galleryContainer.innerHTML = '';
+}
