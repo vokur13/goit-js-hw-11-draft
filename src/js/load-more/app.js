@@ -24,7 +24,6 @@ refs.form.addEventListener('submit', onSearch);
 loadMoreBtn.refs.button.addEventListener('click', fetchHits);
 
 submitBtn.show();
-// loadMoreBtn.hide();
 
 function onSearch(e) {
   e.preventDefault();
@@ -55,15 +54,31 @@ function fetchHits() {
 }
 
 function appendGalleryMarkup(hits) {
+  refs.galleryContainer.insertAdjacentHTML('beforeend', cardMarkupTpl(hits));
+  gallerySlider();
+  smoothScroll();
+}
+
+function resetGalleryContainer() {
+  refs.galleryContainer.innerHTML = '';
+}
+
+function smoothScroll() {
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
+}
+
+function gallerySlider() {
   var lightbox = new SimpleLightbox('.gallery a', {
     /* options */
     captionsData: 'alt',
     captionDelay: 250,
   });
   lightbox.refresh();
-  refs.galleryContainer.insertAdjacentHTML('beforeend', cardMarkupTpl(hits));
-}
-
-function resetGalleryContainer() {
-  refs.galleryContainer.innerHTML = '';
 }
