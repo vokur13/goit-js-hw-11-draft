@@ -1,13 +1,11 @@
 import cardMarkupTpl from '../../templates/cardMarkupTpl.hbs';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import '../../css/_common.css';
 import '../../css/_app.css';
 import GalleryAPIService from './api-service';
 import Button from './class-button';
 import Notiflix from 'notiflix';
-// Описан в документации
-import SimpleLightbox from 'simplelightbox';
-// Дополнительный импорт стилей
-import 'simplelightbox/dist/simple-lightbox.min.css';
 // import axios from 'axios';
 
 const refs = {
@@ -26,6 +24,7 @@ refs.form.addEventListener('submit', onSearch);
 loadMoreBtn.refs.button.addEventListener('click', fetchHits);
 
 submitBtn.show();
+// loadMoreBtn.hide();
 
 function onSearch(e) {
   e.preventDefault();
@@ -56,6 +55,12 @@ function fetchHits() {
 }
 
 function appendGalleryMarkup(hits) {
+  var lightbox = new SimpleLightbox('.gallery a', {
+    /* options */
+    captionsData: 'alt',
+    captionDelay: 250,
+  });
+  lightbox.refresh();
   refs.galleryContainer.insertAdjacentHTML('beforeend', cardMarkupTpl(hits));
 }
 
