@@ -1,19 +1,21 @@
+import Notiflix from 'notiflix';
+
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '29248542-cea93977a5234fa0e2d1b3dfd';
 export default class GalleryAPIService {
   constructor() {
     this.queryItem = '';
     this.page = 1;
+    this.hitsCount = 0;
   }
   fetchGallery() {
-    console.log(this);
     const searchParams = new URLSearchParams({
       key: API_KEY,
       q: this.queryItem,
       image_type: 'photo',
       orientation: 'horizontal',
       safesearch: true,
-      per_page: 4,
+      per_page: 40,
       page: this.page,
       fields: [
         'webformatURL',
@@ -29,9 +31,16 @@ export default class GalleryAPIService {
     const url = `${BASE_URL}?${searchParams}`;
     return fetch(url)
       .then(this.onFetchResponse)
-      .then(({ hits }) => {
-        this.onIncrementPage();
-        return hits;
+      .then(({ hits, totalHits }) => {
+        if (hits.length === 0) {
+          return Notiflix.Notify.failure(
+            'Sorry, there are no images matching your search query. Please try again.'
+          );
+        }
+        this.onIncrementPage(hits);
+        let totalCount = this.hitsCount;
+        const fetchInfo = { hits, totalCount, totalHits };
+        return fetchInfo;
       });
   }
   onFetchResponse(response) {
@@ -40,8 +49,9 @@ export default class GalleryAPIService {
     }
     return response.json();
   }
-  onIncrementPage() {
+  onIncrementPage(hits) {
     this.page += 1;
+    this.hitsCount += hits.length;
   }
   resetPage() {
     this.page = 1;

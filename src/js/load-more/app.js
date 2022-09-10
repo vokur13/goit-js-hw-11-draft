@@ -2,29 +2,20 @@ import cardMarkupTpl from '../../templates/cardMarkupTpl.hbs';
 import '../../css/_common.css';
 import '../../css/_app.css';
 import GalleryAPIService from './api-service';
-import Button from './load-more-btn';
-// import Notiflix from 'notiflix';
+import Button from './class-button';
+import Notiflix from 'notiflix';
 // import axios from 'axios';
-
-// const refs = {
-//   form: document.querySelector('#search-form'),
-//   input: document.querySelector('[name="searchQuery"]'),
-//   submitBtn: document.querySelector('[type="submit"]'),
-//   galleryContainer: document.querySelector('.gallery'),
-//   loadMoreBtn: document.querySelector('.load-more'),
-// };
 
 const refs = {
   form: document.querySelector('#search-form'),
   galleryContainer: document.querySelector('.gallery'),
-  //   loadMoreBtn: document.querySelector('.load-more'),
 };
 
 const loadMoreBtn = new Button({
   selector: '[data-action="load-more"]',
   hidden: true,
 });
-const submitBtn = new Button({ selector: '[type="submit"]' });
+const submitBtn = new Button({ selector: '[type="submit"]', hidden: false });
 const galleryAPIService = new GalleryAPIService();
 
 refs.form.addEventListener('submit', onSearch);
@@ -37,7 +28,7 @@ function onSearch(e) {
 
   galleryAPIService.query = e.currentTarget.elements.searchQuery.value;
   if (galleryAPIService.query === '') {
-    return alert('Please let us know the query subject');
+    return Notiflix.Notify.warning('Please let us know the query subject');
   }
 
   galleryAPIService.resetPage();
@@ -48,8 +39,14 @@ function onSearch(e) {
 
 function fetchHits() {
   loadMoreBtn.disable();
-  galleryAPIService.fetchGallery().then(hits => {
+  galleryAPIService.fetchGallery().then(({ hits, totalCount, totalHits }) => {
     appendGalleryMarkup(hits);
+    if (totalCount > totalHits) {
+      loadMoreBtn.hide();
+      return Notiflix.Notify.failure(
+        "We're sorry, but you've reached the end of search results."
+      );
+    }
     loadMoreBtn.enable();
   });
 }
