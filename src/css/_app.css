@@ -7,7 +7,7 @@ body {
 
 img {
   display: block;
-  max-width: 100%;
+  width: 100%;
   height: auto;
 }
 
@@ -40,7 +40,7 @@ img {
 .load-more {
 }
 .photo-card {
-  height: 450px;
+  height: fit-content;
   overflow: hidden;
 }
 .photo-card img {
@@ -48,6 +48,14 @@ img {
   object-fit: cover;
 }
 .info {
+  display: flex;
+  justify-content: space-between;
 }
 .info-item {
+  margin: 0;
+  text-align: center;
+}
+
+.info-item b {
+  font-weight: lighter;
 }
