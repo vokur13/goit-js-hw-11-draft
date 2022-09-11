@@ -1,4 +1,5 @@
 import Notiflix from 'notiflix';
+import axios from 'axios';
 
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '29248542-cea93977a5234fa0e2d1b3dfd';
@@ -28,11 +29,16 @@ export default class GalleryAPIService {
       ],
     });
     const url = `${BASE_URL}?${searchParams}`;
-    const response = await fetch(url);
-    const { hits, totalHits } = await response.this.onFetchResponse();
-    return { hits, totalHits };
+    try {
+      const response = await axios.get(url);
+      const { hits, totalHits } = await response.data;
+      const fetchInfo = await this.afterFetchProcessing(hits, totalHits);
+      return fetchInfo;
+    } catch (error) {
+      console.log(error);
+    }
   }
-  async function(hits, totalHits) {
+  afterFetchProcessing(hits, totalHits) {
     if (hits.length === 0) {
       return Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
@@ -40,18 +46,9 @@ export default class GalleryAPIService {
     }
     let totalCount = this.hitsCount;
     if (totalCount === 0) {
-      this.onFoundNotify(totalHits);
+      this.onFoundNotifyInfScr(totalHits);
     }
     this.onIncrementPage(hits);
-    const fetchInfo = { hits, totalCount, totalHits };
-    return fetchInfo;
-  }
-
-  onFetchResponse(response) {
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
-    return response.json();
   }
   onIncrementPage(hits) {
     this.page += 1;
@@ -61,7 +58,7 @@ export default class GalleryAPIService {
     this.page = 1;
   }
 
-  onFoundNotify(totalHits) {
+  onFoundNotifyInfScr(totalHits) {
     Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
   }
 

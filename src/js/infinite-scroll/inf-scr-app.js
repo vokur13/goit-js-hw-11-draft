@@ -4,7 +4,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import GalleryAPIService from './inf-scr-api-service';
 import Button from './inf-scr-class-button';
 import Notiflix from 'notiflix';
-// import axios from 'axios';
+// import InfiniteScroll from 'infinite-scroll';
 
 const refs = {
   form: document.querySelector('#search-form'),
@@ -38,8 +38,8 @@ function onSearch(e) {
 }
 
 async function fetchHits() {
+  loadMoreBtn.disable();
   try {
-    loadMoreBtn.disable();
     const fetchGalleryToUX = await galleryAPIService.fetchGallery({});
     const markup = await fetchGalleryToUX(({ hits, totalCount, totalHits }) => {
       appendGalleryMarkup(hits);

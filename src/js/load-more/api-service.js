@@ -27,7 +27,6 @@ export default class GalleryAPIService {
         'downloads',
       ],
     });
-    //     const url = `https://pixabay.com/api/?key=29248542-cea93977a5234fa0e2d1b3dfd&q=${this.queryItem}&image_type=photo&orientation=horizontal&per_page=${this.per_page}&page=${this.page}`;
     const url = `${BASE_URL}?${searchParams}`;
     return fetch(url)
       .then(this.onFetchResponse)

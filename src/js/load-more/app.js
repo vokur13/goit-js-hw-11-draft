@@ -4,7 +4,6 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import GalleryAPIService from './api-service';
 import Button from './class-button';
 import Notiflix from 'notiflix';
-// import axios from 'axios';
 
 const refs = {
   form: document.querySelector('#search-form'),
