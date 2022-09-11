@@ -1,37 +1,41 @@
 <div class="wrapper">
   <header class="header">
     <div class="header__container">
-      <nav class="nav">
-        <ul class="nav__list">
-          <li class="nav__item">
-            <a class="nav__link" href="/src/index.html">Load More Button</a>
-          </li>
-          <li class="nav__item">
-            <a class="nav__link" href="/src/infinite-scroll.html"
-              >Infinite Scroll</a
-            >
-          </li>
-        </ul>
-      </nav>
-      <form class="search-form" id="search-form">
-        <!-- <label for="searchQuery" class="sr-only">Search images...</label> -->
-        <input
-          type="text"
-          name="searchQuery"
-          id="searchQuery"
-          autocomplete="off"
-          placeholder="Search images..."
-        />
-        <!-- <button class="button sr-only" type="submit">Search</button> -->
-        <button type="submit" class="btn btn-primary button submit">
-          <span
-            class="spinner-border spinner-border-sm spinner is-hidden"
-            role="status"
-            aria-hidden="true"
-          ></span
-          >Search
-        </button>
-      </form>
+      <div class="nav__container">
+        <nav class="nav">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a class="nav__link" href="/src/index.html">Load More Button</a>
+            </li>
+            <li class="nav__item">
+              <a class="nav__link" href="/src/infinite-scroll.html"
+                >Infinite Scroll</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="form__container">
+        <form class="search-form" id="search-form">
+          <!-- <label for="searchQuery" class="sr-only">Search images...</label> -->
+          <input
+            type="text"
+            name="searchQuery"
+            id="searchQuery"
+            autocomplete="off"
+            placeholder="Search images..."
+          />
+          <!-- <button class="button sr-only" type="submit">Search</button> -->
+          <button type="submit" class="btn btn-primary button submit">
+            <span
+              class="spinner-border spinner-border-sm spinner is-hidden"
+              role="status"
+              aria-hidden="true"
+            ></span
+            >Search
+          </button>
+        </form>
+      </div>
     </div>
   </header>
 </div>

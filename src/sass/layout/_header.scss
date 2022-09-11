@@ -19,10 +19,32 @@
   justify-content: center;
   min-height: 70px;
 }
+.form__container {
+  outline: 1px solid tomato;
+  display: flex;
+  width: 100%;
+}
 .search-form {
   display: flex;
 }
 
 .search-form input {
   margin-right: 5px;
+}
+.nav__container {
+  outline: 1px solid tomato;
+  display: flex;
+  width: 100%;
+}
+.nav {
+  &__list {
+    display: flex;
+  }
+
+  &__item {
+    margin-right: 30px;
+  }
+
+  &__link {
+  }
 }

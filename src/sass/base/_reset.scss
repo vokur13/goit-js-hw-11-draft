@@ -27,8 +27,13 @@ ul,
 ol {
   margin: 0;
   padding-left: 0;
+  list-style: none;
 }
 
 button {
   cursor: pointer;
+}
+
+a {
+  text-decoration: none;
 }
