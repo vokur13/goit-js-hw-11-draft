@@ -1,8 +1,6 @@
 import cardMarkupTpl from '../../templates/cardMarkupTpl.hbs';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import '../../css/_common.css';
-import '../../css/_app.css';
 import GalleryAPIService from './api-service';
 import Button from './class-button';
 import Notiflix from 'notiflix';
@@ -69,7 +67,7 @@ function smoothScroll() {
     .firstElementChild.getBoundingClientRect();
 
   window.scrollBy({
-    top: cardHeight * 2,
+    top: cardHeight * 3,
     behavior: 'smooth',
   });
 }
